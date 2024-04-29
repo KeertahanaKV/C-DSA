@@ -199,7 +199,7 @@ int searchbypos(struct clist* list,int pos)
 {
     if(pos<0 || pos>count-1)
     {
-        printf("ivlnavlid position\n");
+        printf("Inavlid position\n");
         return -1;
     }
     if(list->head->link==NULL)
@@ -240,37 +240,44 @@ void insertbyOrder(struct clist* list,int val){
     curr->link = newnode;
     count++;
 }
-void  reverselist(struct clist* list)
+void reverselist(struct clist* list)
 {
-    if(list->head->link==NULL)
+    if(list->head->link == NULL || list->head->link->link == list->head->link)
     {
-        printf("Empty list\n");
+        printf("List is either empty or has only one node\n");
         return;
     }
-    struct node* current=list->head->link;
-    struct node* prev=NULL;
-    struct node* next;
+    struct node* current = list->head->link;
+    struct node* prev = NULL;
+    struct node* next = NULL;
     do
     {
-        next=current->link;
-        current->link=prev;
-        prev=current;
-        current=next;
-    }while(current!=NULL);
-    list->head->link->link=prev;
-    list->head->link=prev;
-    
+        next = current->link;
+        current->link = prev;
+        prev = current;
+        current = next;
+    } while (current != list->head->link);
+    list->head->link->link = prev;
+    list->head->link = prev;
 }
+
 void freelist(struct clist* list)
 {
-    struct node* current=list->head->link;
-    struct node* next;
-    while(current!=NULL)
+    if(list->head->link == NULL)
     {
-        next=current->link;
-        free(current);
-        current=next;
+        printf("List is already empty\n");
+        return;
     }
+    struct node* current = list->head->link;
+    struct node* next = NULL;
+    while(current != list->head->link)
+    {
+        next = current->link;
+        free(current);
+        current = next;
+    }
+    list->head->link = NULL;
+    printf("Sucessfully freed all the Memory");
 }
 
 int main()
@@ -363,11 +370,10 @@ int main()
            break;
     case 12:
             freelist(list);
-            return 0;
+           
     default:
          printf("\nEnter the correct choice");
     }
 }
 return 0;
 }
-
