@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-
+#include<stdio.h>
+#include<stdlib.h>
 int count = 0;
 
 struct node
@@ -101,6 +100,38 @@ current->nlink->plink = newNode;
 current->nlink = newNode;
 count++;
 }
+void insertbyOrder(struct dclist* list,int val)
+{
+    struct node* newnode = createNode(val);
+    if(list->head->nlink == NULL){
+        list->head->nlink = newnode;
+        newnode->nlink = newnode;
+        newnode->plink = newnode;
+       count++;
+        return;
+    }
+    struct node* curr = list->head->nlink;
+    struct node* tail = curr->plink;
+    if(curr->data > val){
+        newnode->nlink = list->head->nlink;
+        list->head->nlink = newnode;
+        newnode->plink = tail;
+        newnode->nlink->plink = newnode;
+        tail->nlink = newnode;
+        count++;
+        return;
+    }
+    while(curr->nlink != list->head->nlink && curr->nlink->data < val)
+    {
+        curr = curr->nlink;
+    }
+    newnode->nlink = curr->nlink;
+    curr->nlink = newnode;
+    newnode->plink = curr;
+    newnode->nlink->plink = newnode;
+    count++;
+}
+
 void deleteatfront(struct dclist* list)
 {
      if (list->head->nlink == NULL) 
@@ -232,11 +263,10 @@ current = current->plink;
 } while (current != list->head->nlink);
 list->head->nlink = current->nlink;
 }
-void freeList(List *list) {
+void freelist(struct dclist *list) {
 if (list->head->nlink == NULL){
 free(list->head);
 free(list);
-return;
 }
 struct node* current = list->head->nlink;
 do {
@@ -247,6 +277,7 @@ free(temp);
 free(current);
 free(list->head);
 free(list);
+ printf("Sucessfully freed all the Memory");
 }
 int main()
 {
