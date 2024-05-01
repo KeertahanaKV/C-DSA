@@ -1,4 +1,4 @@
-//Representation of stack using linked list		(Header node is included)
+//Representation of stack using linked list(Header node is included)
 
 #include<stdio.h>
 #include<stdlib.h>
