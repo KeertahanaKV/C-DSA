@@ -3,8 +3,8 @@
 
 struct node
 {
-    int data;
-    struct node* link;
+   int data;
+   struct node* link;
 };
 struct slist
 {
@@ -305,5 +305,7 @@ int main() {
          printf("\nEnter the correct choice");
     }
 }
+    
     return 0;
+
 }
