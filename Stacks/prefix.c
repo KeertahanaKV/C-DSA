@@ -113,7 +113,7 @@ void infxtoprefix(char* infix,char* prefix)
         }
         else
         {
-         while(st.top>=0 && prec(st.s[st.top])>prec(c)&&assoc(c)=='l')
+         while(st.top>=0 &&(prec(st.s[st.top])>prec(c) ||(prec(st.s[st.top])==prec(c)&&assoc(c)=='r')))
          {
              prefix[index++]=pop(&st);
          }
@@ -183,14 +183,15 @@ int main()
         case 0:return 0;
         case 1:
             printf("\nenter the infix expression:  ");
-            scanf(" %s", infix);
+            scanf("%s", infix);
             infxtoprefix(infix, prefix);
             break;
          case 2:
          printf("enter the prefix expresion: ");
          scanf("%s",prefix);
          evalution(prefix);
-    }
+         default:printf("\nChoose correct option");
+       }
     }
 
     return 0;
