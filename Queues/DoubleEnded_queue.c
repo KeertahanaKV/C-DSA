@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define N 10
-// Doubly Ended Queue Structure
+// Double Ended Queue Structure
 
 struct DQ
 {
